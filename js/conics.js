@@ -53,25 +53,27 @@ const ConicsAnalyzer = (function() {
             ]);
         }
 
-        if ((m = expr.match(/^y=x\^2([+-]\d+)x([+-]\d+)$/))) {
-            const b = Number(m[1]);
-            const c = Number(m[2]);
-            const h = -b / 2;
-            const k = c - (b * b) / 4;
-            return parabolaVertical(h, k, 1, 'Parabole', [
+        if ((m = expr.match(/^y=([+-]?\d*(?:\.\d+)?)x\^2([+-]\d+(?:\.\d+)?)x([+-]\d+(?:\.\d+)?)$/))) {
+            const a = coefficient(m[1]);
+            const b = Number(m[2]);
+            const c = Number(m[3]);
+            const h = -b / (2 * a);
+            const k = c - (b * b) / (4 * a);
+            return parabolaVertical(h, k, a, 'Parabole', [
                 'Sommet: (' + format(h) + ', ' + format(k) + ')',
-                'Ouverture vers le haut'
+                a > 0 ? 'Ouverture vers le haut' : 'Ouverture vers le bas'
             ]);
         }
 
-        if ((m = expr.match(/^x=y\^2([+-]\d+)y([+-]\d+)$/))) {
-            const b = Number(m[1]);
-            const c = Number(m[2]);
-            const h = c - (b * b) / 4;
-            const k = -b / 2;
-            return parabolaHorizontal(h, k, 1, 'Parabole horizontale', [
+        if ((m = expr.match(/^x=([+-]?\d*(?:\.\d+)?)y\^2([+-]\d+(?:\.\d+)?)y([+-]\d+(?:\.\d+)?)$/))) {
+            const a = coefficient(m[1]);
+            const b = Number(m[2]);
+            const c = Number(m[3]);
+            const h = c - (b * b) / (4 * a);
+            const k = -b / (2 * a);
+            return parabolaHorizontal(h, k, a, 'Parabole horizontale', [
                 'Sommet: (' + format(h) + ', ' + format(k) + ')',
-                'Ouverture vers la droite'
+                a > 0 ? 'Ouverture vers la droite' : 'Ouverture vers la gauche'
             ]);
         }
 
@@ -110,6 +112,28 @@ const ConicsAnalyzer = (function() {
             return hyperbola(0, 0, a, b, true, 'Hyperbole verticale', [
                 'Centre: (0, 0)',
                 'Asymptotes: x = +/-(' + format(b) + ' / ' + format(a) + ')y'
+            ]);
+        }
+
+        if ((m = expr.match(/^\(\(x([+-]\d+(?:\.\d+)?)\)\^2\)\/(\d+(?:\.\d+)?)\-\(\(y([+-]\d+(?:\.\d+)?)\)\^2\)\/(\d+(?:\.\d+)?)=1$/))) {
+            const h = -Number(m[1]);
+            const a = Math.sqrt(Number(m[2]));
+            const k = -Number(m[3]);
+            const b = Math.sqrt(Number(m[4]));
+            return hyperbola(h, k, a, b, false, 'Hyperbole decalee', [
+                'Centre: (' + format(h) + ', ' + format(k) + ')',
+                'Asymptotes: y - ' + format(k) + ' = +/-(' + format(b) + ' / ' + format(a) + ')(x - ' + format(h) + ')'
+            ]);
+        }
+
+        if ((m = expr.match(/^\(\(y([+-]\d+(?:\.\d+)?)\)\^2\)\/(\d+(?:\.\d+)?)\-\(\(x([+-]\d+(?:\.\d+)?)\)\^2\)\/(\d+(?:\.\d+)?)=1$/))) {
+            const k = -Number(m[1]);
+            const a = Math.sqrt(Number(m[2]));
+            const h = -Number(m[3]);
+            const b = Math.sqrt(Number(m[4]));
+            return hyperbola(h, k, a, b, true, 'Hyperbole verticale decalee', [
+                'Centre: (' + format(h) + ', ' + format(k) + ')',
+                'Asymptotes: x - ' + format(h) + ' = +/-(' + format(b) + ' / ' + format(a) + ')(y - ' + format(k) + ')'
             ]);
         }
 

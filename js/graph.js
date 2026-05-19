@@ -7,6 +7,7 @@ const GraphManager = (function() {
             boundingbox: [-10, 10, 10, -10],
             axis: true,
             showCopyright: false,
+            showNavigation: false,
             pan: { enabled: true },
             zoom: { enabled: true, wheel: true },
             keepAspectRatio: true
@@ -132,14 +133,43 @@ const GraphManager = (function() {
         board.setBoundingBox([cx - halfW, cy + halfH, cx + halfW, cy - halfH], false);
     }
 
-    function exportPdf() {
-        document.body.classList.add('printing-graph');
-        window.addEventListener('afterprint', cleanup, { once: true });
-        window.requestAnimationFrame(() => window.print());
+    function pan(dx, dy) {
+        if (!board) return;
+        const bb = board.getBoundingBox();
+        const width = bb[2] - bb[0];
+        const height = bb[1] - bb[3];
+        const shiftX = width * dx;
+        const shiftY = height * dy;
+        board.setBoundingBox([bb[0] + shiftX, bb[1] + shiftY, bb[2] + shiftX, bb[3] + shiftY], false);
+    }
 
-        function cleanup() {
-            document.body.classList.remove('printing-graph');
-        }
+    function exportPdf() {
+        if (!board) return;
+        
+        const element = document.getElementById('jxgbox');
+        
+        // Add a temporary background to ensure it's not transparent in the PDF
+        const originalBg = element.style.background;
+        element.style.background = '#ffffff';
+
+        html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+            element.style.background = originalBg; // Restore background
+            
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            
+            const pdf = new jsPDF({
+                orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+                unit: 'px',
+                format: [canvas.width, canvas.height]
+            });
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save("graphe-coniques.pdf");
+        }).catch(err => {
+            console.error("Erreur lors de l'export PDF:", err);
+            alert("Erreur lors de la création du PDF.");
+        });
     }
 
     function resize() {
@@ -154,6 +184,7 @@ const GraphManager = (function() {
         clearGraph,
         resetView,
         zoom,
+        pan,
         exportPdf,
         resize
     };

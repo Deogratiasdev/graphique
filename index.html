@@ -3,73 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trace de Coniques</title>
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- JSXGraph -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
-    
-    <!-- Math.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
-    
-    <!-- MathLive -->
-    <script src="https://unpkg.com/mathlive"></script>
-    
-    <!-- MathJax -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Coniques</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #22201c; /* Solid dark background */
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .phrase-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        .phrase {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #d1cbc2; /* Light, slightly warm grey */
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            text-transform: uppercase; /* More masculine, structured */
+        }
+        .phrase strong {
+            font-weight: 700;
+            color: #ffffff; /* Stark white emphasis */
+        }
+        .enter-btn {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.85rem 2rem;
+            font-size: 0.95rem;
+            background: #8b5e34; /* Solid accent color */
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.15em; /* Wide spacing */
+            text-transform: uppercase;
+            font-weight: 600;
+            border-radius: 4px; /* Sharper edges */
+            transition: background 0.2s ease, transform 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .enter-btn:hover {
+            background: #a37345;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .phrase-container {
+                padding: 1.5rem;
+            }
+            .phrase {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+                line-height: 1.4;
+            }
+            .enter-btn {
+                margin-top: 2rem;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="app-shell">
-        <header class="topbar">
-            <div>
-                <p class="eyebrow">Coniques</p>
-                <h1>Trace de courbes</h1>
-            </div>
-            <a class="help-link" href="guide.html">Aide / explication</a>
-        </header>
-
-        <main class="container">
-            <section class="panel-left">
-                <div class="card input-section">
-                    <h2>Equation</h2>
-                    <p>Saisis une equation parmi les formes prises en charge.</p>
-                    <math-field id="math-input" math-virtual-keyboard-policy="manual">x^2 + y^2 = 4</math-field>
-                    <p class="hint">Formes prises en charge: cercle, parabole, ellipse, hyperbole, forme generale.</p>
-                </div>
-
-                <div class="card analysis-section">
-                    <h2>Analyse mathematique</h2>
-                    <div id="conic-type"><strong>Type :</strong> <span>Cercle</span></div>
-                    <div id="conic-properties"></div>
-                </div>
-            </section>
-
-            <section class="panel-right">
-                <div class="graph-stack">
-                    <div id="jxgbox" class="jxgbox"></div>
-                    <section class="card graph-controls" aria-label="Commandes du graphe">
-                        <h2>Commandes du graphe</h2>
-                        <div class="control-grid">
-                            <button type="button" class="control-btn" data-action="zoom-in">Zoom avant</button>
-                            <button type="button" class="control-btn" data-action="zoom-out">Zoom arriere</button>
-                            <button type="button" class="control-btn" data-action="reset-view">Recentrer</button>
-                            <button type="button" class="control-btn" data-action="clear-graph">Effacer</button>
-                            <button type="button" class="control-btn control-btn-primary" data-action="export-pdf">Telecharger le graphe en PDF</button>
-                        </div>
-                    </section>
-                </div>
-            </section>
-        </main>
+    <div class="phrase-container">
+        <div class="phrase">
+            Plateforme interactive conçue pour l'étude, l'analyse et le tracé de toutes les équations de <strong>coniques</strong>.
+        </div>
+        <a href="grap.html" class="enter-btn">Ouvrir</a>
     </div>
-
-    <!-- JS -->
-    <script src="js/parser.js"></script>
-    <script src="js/conics.js"></script>
-    <script src="js/graph.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
 </body>
 </html>
