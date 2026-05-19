@@ -1,5 +1,7 @@
 # Graph
 
+**Créateurs du projet :** TEVOEDJRE Jefferson et HOUNSONLON Sèwèdo
+
 ## 1. Projet et fonctionnalités
 
 ### 🎯 Objectif du projet
