@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracé de Coniques</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- JSXGraph -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    
+    <!-- Math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    
+    <!-- MathLive -->
+    <script src="https://unpkg.com/mathlive"></script>
+    
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Tracé de Coniques</h1>
+    </header>
+    
+    <main class="container">
+        <!-- Section Gauche: Saisie et Propriétés -->
+        <section class="panel-left">
+            <div class="input-section">
+                <h2>Équation</h2>
+                <p>Entrez l'équation de votre conique (ex: x^2 + y^2 = 4)</p>
+                <!-- Clavier MathLive -->
+                <math-field id="math-input" virtual-keyboard-mode="manual">x^2 + y^2 = 4</math-field>
+            </div>
+            
+            <div class="analysis-section">
+                <h2>Analyse mathématique</h2>
+                <div id="conic-type"><strong>Type :</strong> <span>Cercle</span></div>
+                <div id="conic-properties">
+                    <!-- Propriétés injectées ici via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Droite/Centre: Graphique -->
+        <section class="panel-right">
+            <div id="jxgbox" class="jxgbox"></div>
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script src="js/parser.js"></script>
+    <script src="js/conics.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
