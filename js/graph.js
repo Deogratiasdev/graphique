@@ -132,6 +132,16 @@ const GraphManager = (function() {
         board.setBoundingBox([cx - halfW, cy + halfH, cx + halfW, cy - halfH], false);
     }
 
+    function exportPdf() {
+        document.body.classList.add('printing-graph');
+        window.addEventListener('afterprint', cleanup, { once: true });
+        window.requestAnimationFrame(() => window.print());
+
+        function cleanup() {
+            document.body.classList.remove('printing-graph');
+        }
+    }
+
     function resize() {
         if (board) {
             board.resizeContainer();
@@ -144,6 +154,7 @@ const GraphManager = (function() {
         clearGraph,
         resetView,
         zoom,
+        exportPdf,
         resize
     };
 })();

@@ -210,16 +210,22 @@ math-field {
     box-shadow: 0 10px 24px rgba(52, 39, 21, 0.08);
 }
 
+.control-btn-primary {
+    grid-column: 1 / -1;
+    background: linear-gradient(180deg, #8b5e34, #6f4928);
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+.control-btn-primary:hover {
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 28px rgba(139, 94, 52, 0.24);
+}
+
 .guide {
     max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
-}
-
-.guide-note {
-    color: var(--muted);
-    margin-bottom: 1rem;
-    line-height: 1.6;
 }
 
 .guide-grid {
@@ -324,23 +330,33 @@ math-field {
     }
 
     .topbar,
-    .guide-note .help-link,
-    .topbar-actions .help-link:last-child {
+    .panel-left,
+    .graph-controls {
         display: none;
     }
 
-    .guide {
-        max-width: none;
+    .container {
+        display: block;
         padding: 0;
     }
 
-    .guide-grid {
-        grid-template-columns: 1fr;
+    .panel-right {
+        display: block;
     }
 
-    .guide-card {
+    .graph-stack {
+        gap: 0;
+    }
+
+    .jxgbox {
+        min-height: 0;
         box-shadow: none;
         border-color: #ddd;
-        break-inside: avoid;
+        height: 90vh;
+    }
+
+    .card {
+        box-shadow: none;
+        border-color: #ddd;
     }
 }

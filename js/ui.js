@@ -75,6 +75,7 @@ const UIManager = (function() {
                 if (action === 'zoom-out') GraphManager.zoom(1.25);
                 if (action === 'reset-view') GraphManager.resetView();
                 if (action === 'clear-graph') GraphManager.clearGraph();
+                if (action === 'export-pdf') GraphManager.exportPdf();
             });
         });
     }
