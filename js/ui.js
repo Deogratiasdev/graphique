@@ -10,8 +10,15 @@ const UIManager = (function() {
         typeDisplay = document.querySelector('#conic-type span');
         propertiesDisplay = document.getElementById('conic-properties');
 
+        if (window.mathVirtualKeyboard) {
+            mathVirtualKeyboard.layouts = 'default';
+            mathVirtualKeyboard.alphabeticLayout = 'azerty';
+        }
+
         // Écouteur d'événements pour le clavier mathématique (MathLive)
         mathInput.addEventListener('input', handleInput);
+        mathInput.addEventListener('focusin', showAzertyKeyboard);
+        mathInput.addEventListener('focusout', hideKeyboard);
         
         // Affichage initial
         handleInput();
@@ -27,6 +34,18 @@ const UIManager = (function() {
 
         // Mettre à jour le graphe
         GraphManager.drawConic(equationMath);
+    }
+
+    function showAzertyKeyboard() {
+        if (!window.mathVirtualKeyboard) return;
+        mathVirtualKeyboard.layouts = 'default';
+        mathVirtualKeyboard.alphabeticLayout = 'azerty';
+        mathVirtualKeyboard.visible = true;
+    }
+
+    function hideKeyboard() {
+        if (!window.mathVirtualKeyboard) return;
+        mathVirtualKeyboard.visible = false;
     }
 
     function updateAnalysisDisplay(analysis) {

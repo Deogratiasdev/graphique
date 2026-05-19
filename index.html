@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracé de Coniques</title>
+    <title>Trace de Coniques</title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -22,34 +22,36 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Tracé de Coniques</h1>
-    </header>
-    
-    <main class="container">
-        <!-- Section Gauche: Saisie et Propriétés -->
-        <section class="panel-left">
-            <div class="input-section">
-                <h2>Équation</h2>
-                <p>Entrez l'équation de votre conique (ex: x^2 + y^2 = 4)</p>
-                <!-- Clavier MathLive -->
-                <math-field id="math-input" virtual-keyboard-mode="manual">x^2 + y^2 = 4</math-field>
+    <div class="app-shell">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">Coniques</p>
+                <h1>Trace de courbes</h1>
             </div>
-            
-            <div class="analysis-section">
-                <h2>Analyse mathématique</h2>
-                <div id="conic-type"><strong>Type :</strong> <span>Cercle</span></div>
-                <div id="conic-properties">
-                    <!-- Propriétés injectées ici via JS -->
-                </div>
-            </div>
-        </section>
+            <a class="help-link" href="guide.html">Aide / explication</a>
+        </header>
 
-        <!-- Section Droite/Centre: Graphique -->
-        <section class="panel-right">
-            <div id="jxgbox" class="jxgbox"></div>
-        </section>
-    </main>
+        <main class="container">
+            <section class="panel-left">
+                <div class="card input-section">
+                    <h2>Equation</h2>
+                    <p>Entre une equation parmi les formes prises en charge.</p>
+                    <math-field id="math-input" math-virtual-keyboard-policy="manual">x^2 + y^2 = 4</math-field>
+                    <p class="hint">Exemples: cercle, parabole, ellipse, hyperbole, ou forme generale a reduire.</p>
+                </div>
+
+                <div class="card analysis-section">
+                    <h2>Analyse mathematique</h2>
+                    <div id="conic-type"><strong>Type :</strong> <span>Cercle</span></div>
+                    <div id="conic-properties"></div>
+                </div>
+            </section>
+
+            <section class="panel-right">
+                <div id="jxgbox" class="jxgbox"></div>
+            </section>
+        </main>
+    </div>
 
     <!-- JS -->
     <script src="js/parser.js"></script>

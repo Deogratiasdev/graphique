@@ -1,8 +1,6 @@
-// Logique de tracé avec JSXGraph
-
 const GraphManager = (function() {
     let board = null;
-    let currentCurve = null;
+    let currentObjects = [];
 
     function init() {
         board = JXG.JSXGraph.initBoard('jxgbox', {
@@ -10,56 +8,112 @@ const GraphManager = (function() {
             axis: true,
             showCopyright: false,
             pan: { enabled: true },
-            zoom: { enabled: true, wheel: true }
+            zoom: { enabled: true, wheel: true },
+            keepAspectRatio: true
         });
     }
 
     function drawConic(equationStr) {
         if (!board) return;
-        
-        // Supprimer l'ancienne courbe
-        if (currentCurve) {
-            board.removeObject(currentCurve);
+        clear();
+
+        const analysis = ConicsAnalyzer.analyze(equationStr);
+        if (!analysis.graph) return;
+
+        const g = analysis.graph;
+        if (g.kind === 'circle') {
+            currentObjects.push(createParametric(
+                t => g.h + g.r * Math.cos(t),
+                t => g.k + g.r * Math.sin(t),
+                0,
+                Math.PI * 2
+            ));
+            return;
         }
 
-        try {
-            // JSXGraph permet de tracer des courbes implicites
-            // Transforme l'équation du type "f(x,y) = g(x,y)" en "f(x,y) - (g(x,y))"
-            let eqParts = equationStr.split('=');
-            let implicitEq = eqParts[0];
-            if (eqParts.length > 1) {
-                implicitEq = eqParts[0] + ' - (' + eqParts[1] + ')';
-            }
+        if (g.kind === 'ellipse') {
+            currentObjects.push(createParametric(
+                t => g.h + g.a * Math.cos(t),
+                t => g.k + g.b * Math.sin(t),
+                0,
+                Math.PI * 2
+            ));
+            return;
+        }
 
-            // Pour JSXGraph, nous devons créer une fonction f(x, y)
-            // On compile l'expression mathématique avec math.js
-            const node = math.parse(implicitEq);
-            const compiled = node.compile();
+        if (g.kind === 'parabolaVertical') {
+            currentObjects.push(createParametric(
+                t => g.h + t,
+                t => g.k + g.a * t * t,
+                -10,
+                10
+            ));
+            return;
+        }
 
-            currentCurve = board.create('curve', [
-                function(t) { return t; }, // Ce n'est pas une courbe paramétrique, on utilise une autre approche
-                function(t) { return t; }
-            ], {visible: false}); // Ceci est un hack pour nettoyer, utilisons implicit curve à la place.
-            
-            // JSXGraph implicit curve:
-            board.removeObject(currentCurve);
-            
-            let f = function(x, y) {
-                return compiled.evaluate({x: x, y: y});
-            };
+        if (g.kind === 'parabolaHorizontal') {
+            currentObjects.push(createParametric(
+                t => g.h + g.a * t * t,
+                t => g.k + t,
+                -10,
+                10
+            ));
+            return;
+        }
 
-            currentCurve = board.create('implicitcurve', [f], {
-                strokeColor: '#4a90e2',
-                strokeWidth: 3
-            });
+        if (g.kind === 'hyperbola' && g.vertical) {
+            currentObjects.push(createParametric(
+                t => g.h + g.b * Math.sinh(t),
+                t => g.k + g.a * Math.cosh(t),
+                -2,
+                2
+            ));
+            currentObjects.push(createParametric(
+                t => g.h + g.b * Math.sinh(t),
+                t => g.k - g.a * Math.cosh(t),
+                -2,
+                2
+            ));
+            return;
+        }
 
-        } catch (e) {
-            console.error("Erreur lors du tracé :", e);
+        if (g.kind === 'hyperbola') {
+            currentObjects.push(createParametric(
+                t => g.h + g.a * Math.cosh(t),
+                t => g.k + g.b * Math.sinh(t),
+                -2,
+                2
+            ));
+            currentObjects.push(createParametric(
+                t => g.h - g.a * Math.cosh(t),
+                t => g.k + g.b * Math.sinh(t),
+                -2,
+                2
+            ));
+        }
+    }
+
+    function createParametric(xFn, yFn, tMin, tMax) {
+        return board.create('curve', [xFn, yFn, tMin, tMax], {
+            strokeColor: '#8b5e34',
+            strokeWidth: 3
+        });
+    }
+
+    function clear() {
+        currentObjects.forEach(obj => board.removeObject(obj));
+        currentObjects = [];
+    }
+
+    function resize() {
+        if (board) {
+            board.resizeContainer();
         }
     }
 
     return {
         init,
-        drawConic
+        drawConic,
+        resize
     };
 })();
