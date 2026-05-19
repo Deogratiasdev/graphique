@@ -67,7 +67,8 @@ Développer une application web (type Desmos simplifié) permettant de :
 ```txt
 /graphic
 │
-├── index.html #Structure html
+├── index.html #Page d'accueil
+├── grap.html #Interface du graphe
 ├── /css
 │   └── style.css #Style css
 │
