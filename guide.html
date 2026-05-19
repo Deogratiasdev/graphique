@@ -6,22 +6,121 @@
     <title>Guide des coniques</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="guide-page">
     <div class="app-shell">
         <header class="topbar">
             <div>
                 <p class="eyebrow">Coniques</p>
                 <h1>Guide et explication</h1>
             </div>
-            <a class="help-link" href="index.html">Retour au tracé</a>
+            <div class="topbar-actions">
+                <button class="help-link" type="button" onclick="window.print()">Telecharger en PDF</button>
+                <a class="help-link" href="index.html">Retour au tracé</a>
+            </div>
         </header>
 
         <main class="guide">
-            <p class="guide-note">
-                Cette page reprend le fichier <code>agent.md</code> comme support d'explication.
-            </p>
-            <section class="guide-card">
-                <iframe src="agent.md" title="Agent markdown"></iframe>
+            <section class="guide-card guide-hero">
+                <p class="guide-note">
+                    Cette page reprend le contenu de <code>agent.md</code> dans une presentation plus lisible
+                    et harmonisee avec le reste de l'application.
+                </p>
+            </section>
+
+            <section class="guide-grid">
+                <article class="guide-card">
+                    <h2>Projet et objectifs</h2>
+                    <p>Le but est de construire une application web type Desmos simplifiee pour les coniques.</p>
+                    <ul>
+                        <li>Saisir des equations mathematiques de coniques</li>
+                        <li>Identifier automatiquement le type de courbe</li>
+                        <li>Afficher une representation mathematique propre</li>
+                        <li>Tracer la courbe dans un plan cartesien</li>
+                        <li>Fournir les proprietes geometriques associees</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card">
+                    <h2>Coniques prises en charge</h2>
+                    <ul>
+                        <li>Cercle</li>
+                        <li>Cercle decale</li>
+                        <li>Parabole verticale</li>
+                        <li>Parabole horizontale</li>
+                        <li>Ellipse</li>
+                        <li>Ellipse decalee</li>
+                        <li>Hyperbole horizontale</li>
+                        <li>Hyperbole verticale</li>
+                        <li>Equations generales a transformer</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card">
+                    <h2>Exemples d'equations</h2>
+                    <div class="equation-list">
+                        <span>x^2 + y^2 = 25</span>
+                        <span>(x - 2)^2 + (y + 3)^2 = 16</span>
+                        <span>y = x^2 - 4x + 3</span>
+                        <span>x = y^2 - 6y + 5</span>
+                        <span>x^2/16 + y^2/9 = 1</span>
+                        <span>((x - 1)^2)/25 + ((y + 2)^2)/9 = 1</span>
+                        <span>x^2/9 - y^2/4 = 1</span>
+                        <span>y^2/16 - x^2/25 = 1</span>
+                        <span>x^2 + y^2 - 4x + 6y - 12 = 0</span>
+                        <span>4x^2 + 9y^2 - 16x + 18y - 11 = 0</span>
+                    </div>
+                </article>
+
+                <article class="guide-card">
+                    <h2>Comment lire les formes</h2>
+                    <ul>
+                        <li>Pour un cercle, les coefficients de x^2 et y^2 sont egaux.</li>
+                        <li>Pour une ellipse, les termes sont de meme signe mais different en valeur.</li>
+                        <li>Pour une hyperbole, les termes x^2 et y^2 ont des signes opposes.</li>
+                        <li>Pour une parabole, un seul terme est au carre.</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card guide-wide">
+                    <h2>Conseils d'utilisation</h2>
+                    <ul>
+                        <li>Saisis une equation simple pour obtenir un trace instantane.</li>
+                        <li>Utilise les formes generales pour verifier la reduction canonique.</li>
+                        <li>Sur mobile, le graphe reste prioritaire et l'interface passe en colonne.</li>
+                        <li>Le bouton PDF ouvre la boite d'impression du navigateur pour enregistrer le guide.</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card">
+                    <h2>Architecture</h2>
+                    <ul>
+                        <li><strong>app.js</strong>: initialise toute l'application.</li>
+                        <li><strong>parser.js</strong>: interprete les equations.</li>
+                        <li><strong>conics.js</strong>: gere la classification et les proprietes.</li>
+                        <li><strong>graph.js</strong>: gere le tracage JSXGraph.</li>
+                        <li><strong>ui.js</strong>: gere l'interface et les interactions.</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card">
+                    <h2>Outils recommandes</h2>
+                    <ul>
+                        <li><strong>math.js</strong> pour les calculs et le parsing.</li>
+                        <li><strong>JSXGraph</strong> pour le tracage graphique.</li>
+                        <li><strong>MathLive</strong> pour la saisie mathematique.</li>
+                        <li><strong>MathJax</strong> pour l'affichage propre des formules.</li>
+                    </ul>
+                </article>
+
+                <article class="guide-card guide-wide">
+                    <h2>Responsivite et experience utilisateur</h2>
+                    <ul>
+                        <li>Sur mobile, le layout passe en colonne avec le graphe prioritaire.</li>
+                        <li>Sur tablette, l'interface reste hybride et confortable au toucher.</li>
+                        <li>Sur desktop, le panneau de saisie, le graphe et les controles restent bien separes.</li>
+                        <li>Le but est de garder une interface fluide, legere et simple a comprendre.</li>
+                    </ul>
+                </article>
             </section>
         </main>
     </div>

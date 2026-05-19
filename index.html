@@ -48,7 +48,18 @@
             </section>
 
             <section class="panel-right">
-                <div id="jxgbox" class="jxgbox"></div>
+                <div class="graph-stack">
+                    <div id="jxgbox" class="jxgbox"></div>
+                    <section class="card graph-controls" aria-label="Commandes du graphe">
+                        <h2>Commandes du graphe</h2>
+                        <div class="control-grid">
+                            <button type="button" class="control-btn" data-action="zoom-in">Zoom avant</button>
+                            <button type="button" class="control-btn" data-action="zoom-out">Zoom arriere</button>
+                            <button type="button" class="control-btn" data-action="reset-view">Recentrer</button>
+                            <button type="button" class="control-btn" data-action="clear-graph">Effacer</button>
+                        </div>
+                    </section>
+                </div>
             </section>
         </main>
     </div>

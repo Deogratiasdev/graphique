@@ -105,6 +105,33 @@ const GraphManager = (function() {
         currentObjects = [];
     }
 
+    function clearGraph() {
+        clear();
+        if (board) {
+            board.fullUpdate();
+        }
+    }
+
+    function resetView() {
+        if (board) {
+            board.setBoundingBox([-10, 10, 10, -10], false);
+        }
+    }
+
+    function zoom(factor) {
+        if (!board) return;
+        const bb = board.getBoundingBox();
+        const left = bb[0];
+        const top = bb[1];
+        const right = bb[2];
+        const bottom = bb[3];
+        const cx = (left + right) / 2;
+        const cy = (top + bottom) / 2;
+        const halfW = ((right - left) / 2) * factor;
+        const halfH = ((top - bottom) / 2) * factor;
+        board.setBoundingBox([cx - halfW, cy + halfH, cx + halfW, cy - halfH], false);
+    }
+
     function resize() {
         if (board) {
             board.resizeContainer();
@@ -114,6 +141,9 @@ const GraphManager = (function() {
     return {
         init,
         drawConic,
+        clearGraph,
+        resetView,
+        zoom,
         resize
     };
 })();

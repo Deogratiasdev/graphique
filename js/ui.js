@@ -19,6 +19,7 @@ const UIManager = (function() {
         mathInput.addEventListener('input', handleInput);
         mathInput.addEventListener('focusin', showAzertyKeyboard);
         mathInput.addEventListener('focusout', hideKeyboard);
+        bindGraphControls();
         
         // Affichage initial
         handleInput();
@@ -63,6 +64,19 @@ const UIManager = (function() {
         } else {
             propertiesDisplay.innerHTML = '<p>Aucune propriété détectée pour cette équation.</p>';
         }
+    }
+
+    function bindGraphControls() {
+        const controls = document.querySelectorAll('[data-action]');
+        controls.forEach(button => {
+            button.addEventListener('click', () => {
+                const action = button.getAttribute('data-action');
+                if (action === 'zoom-in') GraphManager.zoom(0.8);
+                if (action === 'zoom-out') GraphManager.zoom(1.25);
+                if (action === 'reset-view') GraphManager.resetView();
+                if (action === 'clear-graph') GraphManager.clearGraph();
+            });
+        });
     }
 
     return {
