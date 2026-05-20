@@ -6,6 +6,7 @@ const UIManager = (function() {
     let propertiesDisplay;
     let keyboardDock;
     let keyboardCloseBtn;
+    let initialEquation = '';
 
     function init() {
         mathInput = document.getElementById('math-input');
@@ -13,6 +14,14 @@ const UIManager = (function() {
         propertiesDisplay = document.getElementById('conic-properties');
         keyboardDock = document.getElementById('keyboard-dock');
         keyboardCloseBtn = document.getElementById('keyboard-close-btn');
+
+        initialEquation = localStorage.getItem('savedEquation') || mathInput.value;
+        if (initialEquation) {
+            mathInput.value = initialEquation;
+            if (typeof mathInput.setValue === 'function') {
+                mathInput.setValue(initialEquation);
+            }
+        }
 
         const categorizedExamples = [
             {
@@ -118,22 +127,16 @@ const UIManager = (function() {
             });
         }
 
-        // Écouteur d'événements pour le clavier mathématique (MathLive)
-        mathInput.addEventListener('input', handleInput);
-        mathInput.addEventListener('focusin', showAzertyKeyboard);
         if (keyboardCloseBtn) {
             keyboardCloseBtn.addEventListener('click', hideKeyboard);
         }
+        // Écouteur d'événements pour le clavier mathématique (MathLive)
+        mathInput.addEventListener('input', handleInput);
+        mathInput.addEventListener('focusin', showAzertyKeyboard);
         bindGraphControls();
-        
-        // Récupérer l'équation sauvegardée
-        const savedEquation = localStorage.getItem('savedEquation');
-        if (savedEquation) {
-            mathInput.value = savedEquation;
-        }
 
         // Affichage initial
-        handleInput();
+        requestAnimationFrame(handleInput);
     }
 
     function handleInput() {
