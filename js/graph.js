@@ -91,6 +91,23 @@ const GraphManager = (function() {
                 -2,
                 2
             ));
+            return;
+        }
+
+        if (g.kind === 'function') {
+            const curve = board.create('functiongraph', [
+                function(x) {
+                    try {
+                        return g.compiled.evaluate({ x: x });
+                    } catch (e) {
+                        return NaN;
+                    }
+                }
+            ], {
+                strokeColor: '#8b5e34',
+                strokeWidth: 3
+            });
+            currentObjects.push(curve);
         }
     }
 

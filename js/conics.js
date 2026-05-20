@@ -16,9 +16,12 @@ const ConicsAnalyzer = (function() {
         const general = detectGeneralForm(expr);
         if (general) return general;
 
+        const genericFunc = detectGenericFunction(expr, equationStr);
+        if (genericFunc) return genericFunc;
+
         return {
             type: 'Inconnu',
-            properties: ['Forme non reconnue. Essaie une forme standard.'],
+            properties: ['Forme non reconnue. Essaie une forme standard ou y=f(x).'],
             graph: null
         };
     }
@@ -221,6 +224,36 @@ const ConicsAnalyzer = (function() {
         }
 
         return null;
+    }
+
+    function detectGenericFunction(expr, originalEquationStr) {
+        // Try to parse 'y = f(x)' or just 'f(x)'
+        let rightSide = expr;
+        if (expr.startsWith('y=')) {
+            rightSide = expr.substring(2);
+        }
+        
+        // We use the original parsed string (before heavy normalization) for math.js if possible,
+        // but math.js needs standard operators. Let's do some basic fixes for math.js
+        let mathExpr = rightSide
+            .replace(/([0-9])([a-zA-Z(])/g, '$1*$2') // 3sin -> 3*sin, 3( -> 3*(
+            .replace(/([xy])\(/g, '$1*(')             // x( -> x*(
+            .replace(/\)([\w(])/g, ')*$1');           // )( -> )*(, )x -> )*x
+
+        try {
+            // Test if it's a valid math.js expression
+            const compiled = math.compile(mathExpr);
+            // test evaluation
+            compiled.evaluate({ x: 1 });
+            
+            return {
+                type: 'Fonction',
+                properties: ['Fonction generale: y = ' + rightSide],
+                graph: { kind: 'function', compiled: compiled }
+            };
+        } catch (e) {
+            return null;
+        }
     }
 
     function solveVerticalParabola(A, D, E, F) {

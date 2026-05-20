@@ -42,6 +42,16 @@ const UIManager = (function() {
                     { label: 'Hyperbole verticale', eq: 'y^2/16 - x^2/25 = 1' },
                     { label: 'Hyperbole décalée', eq: '((x-2)^2)/16 - ((y-1)^2)/9 = 1' }
                 ]
+            },
+            {
+                group: 'Fonctions générales',
+                items: [
+                    { label: 'Fonction affine', eq: 'y = 4x + 8' },
+                    { label: 'Fonction inverse', eq: 'y = 1/x' },
+                    { label: 'Fonction trigonométrique', eq: 'y = sin(x)' },
+                    { label: 'Fonction exponentielle', eq: 'y = e^x' },
+                    { label: 'Fonction logarithme', eq: 'y = log(x)' }
+                ]
             }
         ];
         
@@ -110,12 +120,20 @@ const UIManager = (function() {
         mathInput.addEventListener('focusout', hideKeyboard);
         bindGraphControls();
         
+        // Récupérer l'équation sauvegardée
+        const savedEquation = localStorage.getItem('savedEquation');
+        if (savedEquation) {
+            mathInput.value = savedEquation;
+        }
+
         // Affichage initial
         handleInput();
     }
 
     function handleInput() {
         const equationLaTeX = mathInput.value;
+        localStorage.setItem('savedEquation', equationLaTeX);
+        
         const equationMath = MathParser.parseEquation(equationLaTeX);
         
         // Mettre à jour l'analyse
