@@ -4,11 +4,15 @@ const UIManager = (function() {
     let mathInput;
     let typeDisplay;
     let propertiesDisplay;
+    let keyboardDock;
+    let keyboardCloseBtn;
 
     function init() {
         mathInput = document.getElementById('math-input');
         typeDisplay = document.querySelector('#conic-type span');
         propertiesDisplay = document.getElementById('conic-properties');
+        keyboardDock = document.getElementById('keyboard-dock');
+        keyboardCloseBtn = document.getElementById('keyboard-close-btn');
 
         const categorizedExamples = [
             {
@@ -117,7 +121,9 @@ const UIManager = (function() {
         // Écouteur d'événements pour le clavier mathématique (MathLive)
         mathInput.addEventListener('input', handleInput);
         mathInput.addEventListener('focusin', showAzertyKeyboard);
-        mathInput.addEventListener('focusout', hideKeyboard);
+        if (keyboardCloseBtn) {
+            keyboardCloseBtn.addEventListener('click', hideKeyboard);
+        }
         bindGraphControls();
         
         // Récupérer l'équation sauvegardée
@@ -149,11 +155,25 @@ const UIManager = (function() {
         mathVirtualKeyboard.layouts = 'default';
         mathVirtualKeyboard.alphabeticLayout = 'azerty';
         mathVirtualKeyboard.visible = true;
+        if (keyboardDock) {
+            keyboardDock.classList.add('visible');
+        }
     }
 
     function hideKeyboard() {
-        if (!window.mathVirtualKeyboard) return;
+        if (keyboardDock) {
+            keyboardDock.classList.remove('visible');
+        }
+        if (!window.mathVirtualKeyboard) {
+            if (mathInput) {
+                mathInput.blur();
+            }
+            return;
+        }
         mathVirtualKeyboard.visible = false;
+        if (mathInput) {
+            mathInput.blur();
+        }
     }
 
     function updateAnalysisDisplay(analysis) {

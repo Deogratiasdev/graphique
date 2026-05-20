@@ -40,6 +40,10 @@
                 <div class="card input-section">
                     <h2>Equation</h2>
                     <p>Saisis une equation parmi les formes prises en charge.</p>
+                    <div class="keyboard-dock" id="keyboard-dock" aria-live="polite">
+                        <span>Clavier mathématique ouvert</span>
+                        <button type="button" id="keyboard-close-btn" class="keyboard-close-btn">Fermer</button>
+                    </div>
                     <math-field id="math-input" math-virtual-keyboard-policy="manual">x^2 + y^2 = 4</math-field>
                     <p class="hint">Formes prises en charge: cercle, parabole, ellipse, hyperbole, forme generale.</p>
                     <div class="custom-dropdown" id="example-dropdown">

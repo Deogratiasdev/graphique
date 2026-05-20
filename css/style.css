@@ -135,6 +135,44 @@ math-field {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
+.keyboard-dock {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid rgba(139, 94, 52, 0.18);
+    border-radius: 14px;
+    background: rgba(139, 94, 52, 0.08);
+    color: var(--accent);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.keyboard-dock.visible {
+    display: flex;
+}
+
+.keyboard-close-btn {
+    appearance: none;
+    border: 1px solid rgba(139, 94, 52, 0.22);
+    background: linear-gradient(180deg, #fff, #f7efe4);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.45rem 0.8rem;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.keyboard-close-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(139, 94, 52, 0.35);
+    box-shadow: 0 8px 20px rgba(52, 39, 21, 0.08);
+}
+
 .input-section p,
 .analysis-section p,
 .hint,
